@@ -1,0 +1,17 @@
+.black {
+  color: black;
+}
+.grey {
+  color: grey;
+}
+
+.arrowUp {
+  float: right;
+}
+
+.arrowDown {
+  float: right;
+  margin-top: 6px;
+  margin-right: -10px;
+  /* margin-left: 10px; */
+}

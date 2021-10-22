@@ -1,0 +1,22 @@
+export const FETCH_USERS_START = "FETCH_USERS_START";
+export const FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS";
+export const FETCH_USERS_ERROR = "FETCH_USERS_ERROR";
+export const UPDATE_PAGE_CONTENT = "UPDATE_PAGE_CONTENT";
+export const REMOVE_USERS_FROM_LIST = "REMOVE_USERS_FROM_LIST";
+export const SEARCH_USERS = "SEARCH_USERS";
+export const FETCH_ONE_USER = "FETCH_ONE_USER";
+export const RESET_USER_FORM = "RESET_USER_FORM";
+
+export const UPDATE_FIRST_NAME = "FIRST_NAME";
+export const UPDATE_LAST_NAME = "LAST_NAME";
+export const UPDATE_AGE = "AGE";
+export const UPDATE_SEX = "SEX";
+export const UPDATE_PASSWORD = "PASSWORD";
+export const UPDATE_REPEAT = "REPEAT";
+
+export const SORT_FIRST_NAME = "SORT_FIRST_NAME";
+export const SORT_LAST_NAME = "SORT_LAST_NAME";
+export const SORT_AGE = "SORT_AGE";
+export const SORT_SEX = "SORT_SEX";
+
+export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
