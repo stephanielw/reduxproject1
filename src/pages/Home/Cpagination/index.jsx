@@ -14,12 +14,10 @@ class Cpagination extends Component {
           this.props.users.pagination.totalPages <
           preProps.users.pagination.currentPage
         ) {
-          console.log("222");
           this.props.updatePageContentAction(
             this.props.users.pagination.totalPages
           );
         } else {
-          console.log("333");
           this.props.updatePageContentAction(
             preProps.users.pagination.currentPage
           );

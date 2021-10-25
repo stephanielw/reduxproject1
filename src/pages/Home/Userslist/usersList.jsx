@@ -132,11 +132,10 @@ class UsersList extends Component {
               {this.props.users.error ? (
                 <tr>
                   <td colSpan={6} className="text-center">
-                    {this.props.users.error}
+                    {this.props.users.error.message}
                   </td>
                 </tr>
-              ) : null}
-              {!this.props.users.data.length ? (
+              ) : !this.props.users.data.length ? (
                 <tr>
                   <td colSpan={6} className="text-center">
                     No Avaiable Data
