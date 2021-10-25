@@ -10,7 +10,6 @@ import {
   SORT_AGE,
   SORT_SEX,
 } from "../../../redux/actionTypes";
-import { updatePageContentAction } from "../../../redux/action-creators/pagination";
 
 class UsersList extends Component {
   componentDidMount() {
@@ -18,23 +17,13 @@ class UsersList extends Component {
       this.props.fetchUsers();
     }
   }
-  componentDidUpdate(preProps, preState) {
-    if (this.props.users.data !== preProps.users.data) {
-      this.props.updatePageContentAction(
-        this.props.users.data,
-        preProps.pagination.currentPage
-      );
-    }
-  }
   onDeleteUser = (userId) => {
     this.props.deleteUserAction(userId);
   };
-
   render() {
     const { firstNameToggle, lastNameToggle, sexToggle, ageToggle } =
       this.props.users;
-    const { currentUsers } = this.props.pagination;
-
+    const { currentUsers } = this.props.users.pagination;
     return (
       <Row className="usersList">
         <Col>

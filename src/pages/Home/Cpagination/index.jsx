@@ -1,30 +1,49 @@
 import React, { Component } from "react";
 import { Pagination, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
-import { updatePageContentAction } from "../../../redux/action-creators/pagination";
+import { updatePageContentAction } from "../../../redux/action-creators/users";
 
 class Cpagination extends Component {
   componentDidUpdate(preProps, preState) {
     if (this.props.users.data !== preProps.users.data) {
-      this.props.updatePageContentAction(
-        this.props.users.data,
-        preProps.pagination.currentPage
-      );
+      if (
+        preProps.users.isDeleting &&
+        this.props.users.isDeleting !== preProps.users.isDeleting
+      ) {
+        if (
+          this.props.users.pagination.totalPages <
+          preProps.users.pagination.currentPage
+        ) {
+          console.log("222");
+          this.props.updatePageContentAction(
+            this.props.users.pagination.totalPages
+          );
+        } else {
+          console.log("333");
+          this.props.updatePageContentAction(
+            preProps.users.pagination.currentPage
+          );
+        }
+      } else if (this.props.users.isSearching !== preProps.users.isSearching) {
+        this.props.updatePageContentAction(1);
+      } else {
+        this.props.updatePageContentAction(
+          preProps.users.pagination.currentPage
+        );
+      }
     }
   }
   changePage = (number) => {
-    this.props.updatePageContentAction(this.props.users.data, number);
+    this.props.updatePageContentAction(number);
   };
   prevPage = () => {
     this.props.updatePageContentAction(
-      this.props.users.data,
-      this.props.pagination.currentPage - 1
+      this.props.users.pagination.currentPage - 1
     );
   };
   nextPage = () => {
     this.props.updatePageContentAction(
-      this.props.users.data,
-      this.props.pagination.currentPage + 1
+      this.props.users.pagination.currentPage + 1
     );
   };
   render() {
@@ -33,17 +52,21 @@ class Cpagination extends Component {
     items.push(
       <Pagination.Item
         key={"00"}
-        disabled={this.props.pagination.currentPage === 1}
+        disabled={this.props.users.pagination.currentPage === 1}
         onClick={this.prevPage}
       >
         Previous
       </Pagination.Item>
     );
-    for (let number = 1; number <= this.props.pagination.totalPages; number++) {
+    for (
+      let number = 1;
+      number <= this.props.users.pagination.totalPages;
+      number++
+    ) {
       items.push(
         <Pagination.Item
           key={number}
-          active={number === this.props.pagination.currentPage}
+          active={number === this.props.users.pagination.currentPage}
           onClick={() => this.changePage(number)}
         >
           {number}
@@ -54,7 +77,8 @@ class Cpagination extends Component {
       <Pagination.Item
         key={"11"}
         disabled={
-          this.props.pagination.currentPage === this.props.pagination.totalPages
+          this.props.users.pagination.currentPage ===
+          this.props.users.pagination.totalPages
         }
         onClick={this.nextPage}
       >
@@ -77,15 +101,14 @@ class Cpagination extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    pagination: state.pagination,
     users: state.users,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updatePageContentAction: (users, currentPage) => {
-      dispatch(updatePageContentAction(users, currentPage));
+    updatePageContentAction: (currentPage) => {
+      dispatch(updatePageContentAction(currentPage));
     },
   };
 };

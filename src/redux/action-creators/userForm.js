@@ -13,7 +13,6 @@ const fetchOneUserResult = (data) => ({
 export const fetchOneUserAction = (id) => {
   return (dispatch) => {
     axios.get(`http://localhost:5000/users/${id}`).then((res) => {
-      console.log("fetch:" + res.data);
       dispatch(fetchOneUserResult(res.data));
     });
   };

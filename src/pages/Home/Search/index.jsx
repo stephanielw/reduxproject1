@@ -18,6 +18,7 @@ class Search extends Component {
               </Form.Label>
               <Col sm="9">
                 <Form.Control
+                  value={this.props.search}
                   type="text"
                   placeholder="search..."
                   onChange={this.searchUsers}
@@ -31,6 +32,12 @@ class Search extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    search: state.users.search,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     searchUsersAction: (data) => {
@@ -39,4 +46,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

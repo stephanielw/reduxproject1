@@ -15,7 +15,9 @@ import {
 class CreateUser extends Component {
   createUser = () => {
     this.props.createUserAction(this.props.userForm, this.props.history);
-    // this.props.history.push("/");
+  };
+  goBack = () => {
+    this.props.history.push("/");
   };
   render() {
     return (
@@ -104,8 +106,12 @@ class CreateUser extends Component {
                     }
                   />
                   {parseInt(this.props.userForm.age) < 0 ? (
-                    <Form.Text className="text-danger flo">
+                    <Form.Text className="text-danger">
                       Age should be equal or larger than 0
+                    </Form.Text>
+                  ) : this.props.userForm.age === "" ? (
+                    <Form.Text className="text-danger">
+                      Age is required
                     </Form.Text>
                   ) : null}
                 </Col>
@@ -169,6 +175,13 @@ class CreateUser extends Component {
               onClick={this.createUser}
             >
               Create New User
+            </Button>
+            <Button
+              onClick={this.goBack}
+              variant="secondary"
+              className="float-end"
+            >
+              Go Back
             </Button>
           </Col>
         </Row>

@@ -3,12 +3,10 @@ import thunk from "redux-thunk";
 //import logger from "redux-logger";
 
 import users from "../reducers/users";
-import pagination from "../reducers/pagination";
 import userForm from "../reducers/userForm";
 
 const allReducer = combineReducers({
   users,
-  pagination,
   userForm,
 });
 

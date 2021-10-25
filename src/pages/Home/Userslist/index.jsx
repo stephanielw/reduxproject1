@@ -4,13 +4,12 @@ import {
   fetchUsers,
   deleteUserAction,
   sortUsers,
+  updatePageContentAction,
 } from "../../../redux/action-creators/users";
-import { updatePageContentAction } from "../../../redux/action-creators/pagination";
 
 const mapStateToProps = (state) => {
   return {
     users: state.users,
-    pagination: state.pagination,
   };
 };
 

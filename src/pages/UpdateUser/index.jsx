@@ -19,13 +19,14 @@ class UpdateUser extends Component {
     const id = this.props.match.params.id;
     this.props.fetchOneUserAction(id);
   }
-
   updateUser = () => {
     const id = this.props.match.params.id;
     this.props.updateUserAction(id, this.props.userForm, this.props.history);
     // this.props.history.push("/");
   };
-
+  goBack = () => {
+    this.props.history.push("/");
+  };
   render() {
     const user = this.props.userForm;
     return (
@@ -122,6 +123,10 @@ class UpdateUser extends Component {
                       <Form.Text className="text-danger flo">
                         Age should be equal or larger than 0
                       </Form.Text>
+                    ) : user.age === "" ? (
+                      <Form.Text className="text-danger flo">
+                        Age is required
+                      </Form.Text>
                     ) : null}
                   </Col>
                 </Form.Group>
@@ -189,6 +194,13 @@ class UpdateUser extends Component {
                 onClick={this.updateUser}
               >
                 Update User
+              </Button>
+              <Button
+                onClick={this.goBack}
+                variant="secondary"
+                className="float-end"
+              >
+                Go Back
               </Button>
             </Col>
           </Row>
