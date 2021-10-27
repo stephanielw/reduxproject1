@@ -108,6 +108,7 @@ export const updateUserAction = (id, user, history) => {
         dispatch(updateUserSuccess(res.data));
         history.push("/");
       })
+      .then(() => dispatch(resetUserForm()))
       .catch((err) => console.log(err));
   };
 };

@@ -4,33 +4,38 @@ import { connect } from "react-redux";
 import { updatePageContentAction } from "../../../redux/action-creators/users";
 
 class Cpagination extends Component {
-  componentDidUpdate(preProps, preState) {
-    if (this.props.users.data !== preProps.users.data) {
-      if (
-        preProps.users.isDeleting &&
-        this.props.users.isDeleting !== preProps.users.isDeleting
-      ) {
-        if (
-          this.props.users.pagination.totalPages <
-          preProps.users.pagination.currentPage
-        ) {
-          this.props.updatePageContentAction(
-            this.props.users.pagination.totalPages
-          );
-        } else {
-          this.props.updatePageContentAction(
-            preProps.users.pagination.currentPage
-          );
-        }
-      } else if (this.props.users.isSearching !== preProps.users.isSearching) {
-        this.props.updatePageContentAction(1);
-      } else {
-        this.props.updatePageContentAction(
-          preProps.users.pagination.currentPage
-        );
-      }
-    }
-  }
+  // componentDidUpdate(preProps, preState) {
+  //   if (this.props.users.data !== preProps.users.data) {
+  //     if (
+  //       // check whether it's a delect action causing data change
+  //       // start delete set isDeleting = true
+  //       // finsih delete set isDeleting = false
+  //       preProps.users.isDeleting &&
+  //       this.props.users.isDeleting !== preProps.users.isDeleting
+  //     ) {
+  //       if (
+  //         // see whether the deleted item is the only item on the page
+  //         // if yes, it needs to reset the current page to total pages
+  //         this.props.users.pagination.totalPages <
+  //         preProps.users.pagination.currentPage
+  //       ) {
+  //         this.props.updatePageContentAction(
+  //           this.props.users.pagination.totalPages
+  //         );
+  //       } else {
+  //         this.props.updatePageContentAction(
+  //           preProps.users.pagination.currentPage
+  //         );
+  //       }
+  //     } else if (this.props.users.isSearching !== preProps.users.isSearching) {
+  //       // this.props.updatePageContentAction(1);
+  //     } else {
+  //       this.props.updatePageContentAction(
+  //         preProps.users.pagination.currentPage
+  //       );
+  //     }
+  //   }
+  // }
   changePage = (number) => {
     this.props.updatePageContentAction(number);
   };

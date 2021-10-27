@@ -99,14 +99,22 @@ function users(state = initState, action) {
     case REMOVE_USER_SUCCESS:
       let filteredRes = state.data.filter((user) => user._id !== userId);
       filteredRes = sort(state, filteredRes);
+      const tps = Math.ceil(filteredRes.length / state.pagination.usersPerPage);
+      let cp = state.pagination.currentPage;
+      if (tps < cp) {
+        cp = tps;
+      }
       return {
         ...state,
         isDeleting: false,
         data: filteredRes,
         pagination: {
           ...state.pagination,
-          totalPages: Math.ceil(
-            filteredRes.length / state.pagination.usersPerPage
+          totalPages: tps,
+          currentPage: cp,
+          currentUsers: filteredRes.slice(
+            (cp - 1) * state.pagination.usersPerPage,
+            cp * state.pagination.usersPerPage
           ),
         },
       };
@@ -137,13 +145,9 @@ function users(state = initState, action) {
       };
     case SORT_FIRST_NAME:
       if (order === "asc") {
-        sortedResult = state.data.sort((a, b) =>
-          a.firstName.localeCompare(b.firstName)
-        );
+        sortedResult = searchByFirstNameASC(state.data);
       } else if (order === "desc") {
-        sortedResult = state.data.sort((a, b) =>
-          b.firstName.localeCompare(a.firstName)
-        );
+        sortedResult = searchByFirstNameDESC(state.data);
       }
 
       return {
@@ -153,17 +157,20 @@ function users(state = initState, action) {
         lastNameToggle: null,
         sexToggle: null,
         ageToggle: null,
+        pagination: {
+          ...state.pagination,
+          currentUsers: sortedResult.slice(
+            (state.pagination.currentPage - 1) * state.pagination.usersPerPage,
+            state.pagination.usersPerPage * state.pagination.currentPage
+          ),
+        },
       };
 
     case SORT_LAST_NAME:
       if (order === "asc") {
-        sortedResult = state.data.sort((a, b) =>
-          a.lastName.localeCompare(b.lastName)
-        );
+        sortedResult = searchByLastNameASC(state.data);
       } else if (order === "desc") {
-        sortedResult = state.data.sort((a, b) =>
-          b.lastName.localeCompare(a.lastName)
-        );
+        sortedResult = searchByLastNameDESC(state.data);
       }
 
       return {
@@ -173,13 +180,20 @@ function users(state = initState, action) {
         firstNameToggle: null,
         sexToggle: null,
         ageToggle: null,
+        pagination: {
+          ...state.pagination,
+          currentUsers: sortedResult.slice(
+            (state.pagination.currentPage - 1) * state.pagination.usersPerPage,
+            state.pagination.usersPerPage * state.pagination.currentPage
+          ),
+        },
       };
 
     case SORT_AGE:
       if (order === "asc") {
-        sortedResult = state.data.sort((a, b) => a.age - b.age);
+        sortedResult = searchByAgeASC(state.data);
       } else if (order === "desc") {
-        sortedResult = state.data.sort((a, b) => b.age - a.age);
+        sortedResult = searchByAgeDESC(state.data);
       }
 
       return {
@@ -189,13 +203,20 @@ function users(state = initState, action) {
         firstNameToggle: null,
         lastNameToggle: null,
         sexToggle: null,
+        pagination: {
+          ...state.pagination,
+          currentUsers: sortedResult.slice(
+            (state.pagination.currentPage - 1) * state.pagination.usersPerPage,
+            state.pagination.usersPerPage * state.pagination.currentPage
+          ),
+        },
       };
 
     case SORT_SEX:
       if (order === "asc") {
-        sortedResult = state.data.sort((a, b) => a.sex.localeCompare(b.sex));
+        sortedResult = searchBySexASC(state.data);
       } else if (order === "desc") {
-        sortedResult = state.data.sort((a, b) => b.sex.localeCompare(a.sex));
+        sortedResult = searchBySexDESC(state.data);
       }
 
       return {
@@ -205,6 +226,13 @@ function users(state = initState, action) {
         firstNameToggle: null,
         lastNameToggle: null,
         ageToggle: null,
+        pagination: {
+          ...state.pagination,
+          currentUsers: sortedResult.slice(
+            (state.pagination.currentPage - 1) * state.pagination.usersPerPage,
+            state.pagination.usersPerPage * state.pagination.currentPage
+          ),
+        },
       };
     case UPDATE_USER_SUCCESS:
       let originalData = state.data;
